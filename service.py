@@ -2,49 +2,10 @@ import requests
 import json
 
 url = "https://json.freeastrologyapi.com/planets"
-
-# payload = json.dumps({
-#   "year": 1999,
-#   "month": 8,
-#   "date": 20,
-#   "hours": 6,
-#   "minutes": 00,
-#   "seconds": 0,
-#   "latitude": 21.459801,
-#   "longitude": 79.088860,
-#   "timezone": 5.3,
-#   "settings": {
-#     "observation_point": "topocentric",
-#     "ayanamsha": "lahiri"
-#   }
-# })
-
-# headers = {
-#   'Content-Type': 'application/json',
-#   'x-api-key': 'e1KIctvC5C8f5OjgqTcNK1445DPIP0YWaDtbTSnQ'
-# }
-
-# response = requests.request("POST", url, headers=headers, data=payload)
-
-
-# # Convert the response to a JSON object
-# data = response.json()
-
-# json_data = {
-#     "output": [
-#         {
-#             key: {
-#                 "name": value.get("name", "Unknown"),
-#                 "current_sign": value.get("current_sign", "N/A"),
-#                 "normDegree": round(value.get("normDegree", 0), 2),
-#                 "isRetro": value.get("isRetro", "false")
-#             }
-#             for key, value in data["output"][0].items()  # Use data instead of response here
-#             if key.isdigit()
-#         }
-#     ]
-# }
-# print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>:",json_data,"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+headers = {
+        'Content-Type': 'application/json',
+        'x-api-key': 'e1KIctvC5C8f5OjgqTcNK1445DPIP0YWaDtbTSnQ'
+    }
 
 # Helper Functions
 def compute_planetary_score(planet_data):
@@ -97,15 +58,8 @@ def compute_parameter_scores(planets):
         "Relationships": relationship_score,
     }
 
-    
-
 def calculate_dashboard(payload):
     """Main function to parse the input payload and generate scores."""
-    url = "https://json.freeastrologyapi.com/planets"
-    headers = {
-        'Content-Type': 'application/json',
-        'x-api-key': 'e1KIctvC5C8f5OjgqTcNK1445DPIP0YWaDtbTSnQ'
-    }
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
@@ -130,32 +84,4 @@ def calculate_dashboard(payload):
     scores = compute_parameter_scores(planets)
     return scores
 
-# def calculate_dashboard(json_data):
-#     """Main function to parse the input JSON and generate scores."""
-#     planets = {k: v for k, v in json_data["output"][0].items() if isinstance(v, dict) and "name" in v}
 
-#     # Compute scores
-#     scores = compute_parameter_scores(planets)
-#     return scores
-
-
-
-
-# Run Calculation
-# scores = calculate_dashboard(json_data)
-# print("Daily Dashboard Scores:", scores)
-
-# Data to be displayed
-# dashboard_scores = scores
-
-
-# Function to create a visual meter
-def create_meter(score, total=100, length=30):
-    filled_length = int(length * score // total)
-    bar = "█" * filled_length + "-" * (length - filled_length)
-    return f"|{bar}| {score}%"
-
-# Display the dashboard
-# print("Daily Dashboard Scores:\n")
-# for category, score in dashboard_scores.items():
-#     print(f"{category:<20}: {create_meter(score)}")
