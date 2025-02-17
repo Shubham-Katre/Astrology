@@ -3,7 +3,7 @@ from service import calculate_dashboard
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:3000")
+CORS(app, origins="https://horoscopex-1.onrender.com")
 
 @app.route("/planets", methods=['POST'])
 def user():
